@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
 
     private PlayerSearchField _searchField = null;
 
-    private Vector2 _moveSpeed = new Vector2 (8, 8);
+    private Vector3 _moveSpeed = new Vector3 (8, 0, 8);
 
     private bool isSearing = false;
 
@@ -38,11 +38,11 @@ public class Player : MonoBehaviour {
         }
 
         if (up) {
-            _rigidbody.velocity += new Vector3 (0, 0, _moveSpeed.y);
+            _rigidbody.velocity += new Vector3 (0, 0, _moveSpeed.z);
         }
 
         if (down) {
-            _rigidbody.velocity += new Vector3 (0, 0, -_moveSpeed.y);
+            _rigidbody.velocity += new Vector3 (0, 0, -_moveSpeed.z);
         }
 
         if (_searchField.SearchedObject && !isSearing) {
