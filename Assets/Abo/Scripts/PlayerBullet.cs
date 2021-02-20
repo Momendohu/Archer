@@ -11,12 +11,15 @@ public class PlayerBullet : MonoBehaviour {
 
     private float time = 0;
 
+    private readonly float speed = 10;
+
     void Awake () {
         BeginPos = transform.position;
     }
 
     void Update () {
-        time += Time.deltaTime;
+        var dist = Vector3.Distance (BeginPos, EndPos);
+        time += Time.deltaTime * speed / (Mathf.Approximately (dist, 0) ? 0.000001f : dist);
         transform.position = Vector3.LerpUnclamped (BeginPos, EndPos, time);
     }
 
