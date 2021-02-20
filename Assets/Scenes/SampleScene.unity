@@ -301,8 +301,8 @@ GameObject:
   - component: {fileID: 555018868}
   - component: {fileID: 555018867}
   - component: {fileID: 555018866}
-  - component: {fileID: 555018865}
   - component: {fileID: 555018869}
+  - component: {fileID: 555018865}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
