@@ -19,8 +19,11 @@ public class FieldManager : MonoBehaviour {
     }
 
     private GameObject createWall (Vector3Int pos) {
-        return Instantiate (Resources.Load (path_prefab_wall_cube), pos, Quaternion.identity) as GameObject;
+        GameObject obj = Instantiate (Resources.Load (path_prefab_wall_cube), pos, Quaternion.identity) as GameObject;
+        obj.transform.SetParent (this.transform);
+        return obj;
     }
+
     void Awake () {
         this.createWalls ();
     }
