@@ -4,15 +4,21 @@ using UnityEngine;
 
 [RequireComponent (typeof (Rigidbody))]
 public class Player : MonoBehaviour {
-    private readonly string path_prefab_bullet = "Prefabs/Bullet";
+    private readonly string path_prefab_bullet = "Prefabs/PlayerBullet";
 
     private Rigidbody _rigidbody = null;
 
     private PlayerSearchField _searchField = null;
 
-    private Vector3 _moveSpeed = new Vector3 (8, 0, 8);
-
     private bool isSearing = false;
+
+    public UnitParam Param = new UnitParam () {
+        hp = 10,
+        attackPoint = 0,
+        defensePoint = 0,
+        moveSpeed = 8,
+        attackSpeed = 0
+    };
 
     void Awake () {
         _rigidbody = GetComponent<Rigidbody> ();
@@ -30,19 +36,19 @@ public class Player : MonoBehaviour {
 
         _rigidbody.velocity = Vector3.zero;
         if (left) {
-            _rigidbody.velocity += new Vector3 (-_moveSpeed.x, 0, 0);
+            _rigidbody.velocity += new Vector3 (-Param.moveSpeed, 0, 0);
         }
 
         if (right) {
-            _rigidbody.velocity += new Vector3 (_moveSpeed.x, 0, 0);
+            _rigidbody.velocity += new Vector3 (Param.moveSpeed, 0, 0);
         }
 
         if (up) {
-            _rigidbody.velocity += new Vector3 (0, 0, _moveSpeed.z);
+            _rigidbody.velocity += new Vector3 (0, 0, Param.moveSpeed);
         }
 
         if (down) {
-            _rigidbody.velocity += new Vector3 (0, 0, -_moveSpeed.z);
+            _rigidbody.velocity += new Vector3 (0, 0, -Param.moveSpeed);
         }
 
         if (_searchField.SearchedObject && !isSearing) {
@@ -70,5 +76,14 @@ public class Player : MonoBehaviour {
         }
 
         return obj;
+    }
+
+    void OnTriggerEnter (Collider other) {
+        if (other.tag.Equals ("EnemyBullet")) {
+            //param.hp-=other.gameObject.GetComponent<Enemy>().get~
+            if (Param.hp <= 0) {
+                print ("GAME OVER");
+            }
+        }
     }
 }

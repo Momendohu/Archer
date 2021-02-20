@@ -9,6 +9,14 @@ public class PlayerBullet : MonoBehaviour {
 
     public Vector3 EndPos = Vector3.zero;
 
+    public UnitParam Param = new UnitParam () {
+        hp = 99999,
+        attackPoint = 1,
+        defensePoint = 0,
+        moveSpeed = 8,
+        attackSpeed = 0
+    };
+
     private float time = 0;
 
     private readonly float speed = 10;
