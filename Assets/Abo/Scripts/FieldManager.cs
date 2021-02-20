@@ -7,9 +7,14 @@ public class FieldManager : MonoBehaviour {
 
     private void createWalls () {
         //NOTE:仮置き
-        for(int i=-20;i<20;i++){
+        for (int i = -20; i < 20; i++) {
             this.createWall (new Vector3Int (-7, 1, i));
             this.createWall (new Vector3Int (7, 1, i));
+        }
+
+        for (int j = -6; j < 7; j++) {
+            this.createWall (new Vector3Int (j, 1, -20));
+            this.createWall (new Vector3Int (j, 1, 19));
         }
     }
 
