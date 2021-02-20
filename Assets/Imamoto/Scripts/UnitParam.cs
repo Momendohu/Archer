@@ -11,7 +11,7 @@ public struct UnitParam
     // 防御力
     public float defensePoint;
     // 移動速度
-    public float speedPoint;
+    public float moveSpeed;
     // 攻撃速度
     public float attackSpeed;
 }
