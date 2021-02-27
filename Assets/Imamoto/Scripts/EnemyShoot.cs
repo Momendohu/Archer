@@ -21,6 +21,7 @@ public class EnemyShoot : MonoBehaviour
         while (true)
         {
             GameObject runcherBullet = GameObject.Instantiate(_bulletObj) as GameObject; //runcherbulletにbulletのインスタンスを格納
+            runcherBullet.transform.SetParent(this.transform);
             runcherBullet.GetComponent<Rigidbody>().velocity = transform.forward * _bulletSpeed; //アタッチしているオブジェクトの前方にbullet speedの速さで発射
             runcherBullet.transform.position = transform.position;
 

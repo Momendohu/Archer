@@ -80,7 +80,8 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter (Collider other) {
         if (other.tag.Equals ("EnemyBullet")) {
-            //param.hp-=other.gameObject.GetComponent<Enemy>().get~
+            Param.hp -= other.gameObject.GetComponent<EnemyBullet>().attackPoint;
+
             if (Param.hp <= 0) {
                 print ("GAME OVER");
             }
