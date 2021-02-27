@@ -32,8 +32,26 @@ public class PlayerBullet : MonoBehaviour {
     }
 
     void OnTriggerStay (Collider other) {
-        if (other.tag.Equals ("Enemy")) {
+        if (CheckDestroyTag(other.tag)) {
             Destroy (this.gameObject);
         }
+    }
+
+    // 弾を消しても良いオブジェクトタグか確認
+    private bool CheckDestroyTag(string tag)
+    {
+        switch (tag)
+        {
+            // 消さずに貫通すべきオブジェクトタグ
+            case "Player":
+            case "PlayerObject":
+            case "EnemyBullet":
+                return false;
+
+            default:
+                break;
+        }
+
+        return true;
     }
 }
