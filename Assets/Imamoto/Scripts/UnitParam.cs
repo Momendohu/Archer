@@ -4,8 +4,8 @@ using UnityEngine;
 
 public struct UnitParam
 {
-    // 体力
-    public int hp;
+    // 最大体力
+    public int maxHp;
     // 攻撃力
     public int attackPoint;
     // 防御力
