@@ -135,11 +135,11 @@ public class Player : MonoBehaviour {
         switch (item.powerUpType) {
             // ステータス上昇
             case Item.PowerUpType.StatusUp:
-                Param.maxHp = item.itemParam.maxHp > 0 ? item.itemParam.maxHp : Param.maxHp;
-                Param.attackPoint = item.itemParam.attackPoint > 0 ? item.itemParam.attackPoint : Param.attackPoint;
-                Param.defensePoint = item.itemParam.defensePoint > 0 ? item.itemParam.defensePoint : Param.defensePoint;
-                Param.moveSpeed = item.itemParam.moveSpeed > 0 ? item.itemParam.moveSpeed : Param.moveSpeed;
-                Param.attackSpeed = item.itemParam.attackSpeed > 0 ? item.itemParam.attackSpeed : Param.attackSpeed;
+                Param.maxHp += item.itemParam.maxHp > 0 ? item.itemParam.maxHp : Param.maxHp;
+                Param.attackPoint += item.itemParam.attackPoint > 0 ? item.itemParam.attackPoint : Param.attackPoint;
+                Param.defensePoint += item.itemParam.defensePoint > 0 ? item.itemParam.defensePoint : Param.defensePoint;
+                Param.moveSpeed += item.itemParam.moveSpeed > 0 ? item.itemParam.moveSpeed : Param.moveSpeed;
+                Param.attackSpeed += item.itemParam.attackSpeed > 0 ? item.itemParam.attackSpeed : Param.attackSpeed;
                 break;
 
             default:
