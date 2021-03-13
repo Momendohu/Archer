@@ -9,6 +9,8 @@ TagManager:
   - PlayerBullet
   - PlayerObject
   - Item
+  - RoomKey
+  - RoomDoor
   layers:
   - Default
   - TransparentFX

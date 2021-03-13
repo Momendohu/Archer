@@ -14,7 +14,9 @@ public class Player : MonoBehaviour {
 
     private int _nowHp = 0;
 
-    public UnitParam Param = new UnitParam() {
+    private List<RoomKeyType> roomKey = new List<RoomKeyType> ();
+
+    public UnitParam Param = new UnitParam () {
         maxHp = 10,
         attackPoint = 0,
         defensePoint = 0,
@@ -61,6 +63,21 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private bool UseRoomKey (RoomKeyType key) {
+        for (int i = 0; i < roomKey.Count; i++) {
+            if (roomKey[i] == key) {
+                roomKey.RemoveAt (i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void GetRoomKey (RoomKeyType key) {
+        roomKey.Add (key);
+    }
+
     private IEnumerator ShotBullet (GameObject target) {
         while (true) {
             if (!target) {
@@ -82,30 +99,40 @@ public class Player : MonoBehaviour {
         return obj;
     }
 
-    void OnTriggerEnter (Collider other) {
-        switch (other.tag)
-        {
-            case "EnemyBullet":
-                _nowHp -= other.gameObject.GetComponent<EnemyBullet>().attackPoint;
+    void OnCollisionEnter (Collision collision) {
+        if (collision.gameObject.tag.Equals ("RoomKey")) {
+            GetRoomKey (collision.gameObject.GetComponent<RoomKey> ().Type);
+            Destroy (collision.gameObject.gameObject);
+        }
 
-                if (_nowHp <= 0)
-                {
-                    print("GAME OVER");
+        if (collision.gameObject.tag.Equals ("RoomDoor")) {
+            if (UseRoomKey (collision.gameObject.GetComponent<RoomDoor> ().Type)) {
+                collision.gameObject.SetActive (false);
+            }
+        }
+    }
+
+    void OnTriggerEnter (Collider other) {
+        switch (other.tag) {
+            case "EnemyBullet":
+                _nowHp -= other.gameObject.GetComponent<EnemyBullet> ().attackPoint;
+
+                if (_nowHp <= 0) {
+                    print ("GAME OVER");
                 }
                 break;
 
             case "Item":
-                var item = other.gameObject.GetComponent<Item>();
-                UpdateParam(item);
-                Destroy(other.gameObject);
+                var item = other.gameObject.GetComponent<Item> ();
+                UpdateParam (item);
+                Destroy (other.gameObject);
                 break;
         }
     }
 
     // アイテム取得によるステータス更新処理
-    void UpdateParam(Item item){
-        switch (item.powerUpType)
-        {
+    void UpdateParam (Item item) {
+        switch (item.powerUpType) {
             // ステータス上昇
             case Item.PowerUpType.StatusUp:
                 Param.maxHp = item.itemParam.maxHp > 0 ? item.itemParam.maxHp : Param.maxHp;
@@ -116,7 +143,7 @@ public class Player : MonoBehaviour {
                 break;
 
             default:
-                Debug.LogAssertion("存在しないパワーアップをしているよ！ : " + item.powerUpType);
+                Debug.LogAssertion ("存在しないパワーアップをしているよ！ : " + item.powerUpType);
                 break;
         }
 
