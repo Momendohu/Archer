@@ -12,8 +12,10 @@ public class Player : MonoBehaviour {
 
     private bool isSearing = false;
 
-    public UnitParam Param = new UnitParam () {
-        hp = 10,
+    private int _nowHp = 0;
+
+    public UnitParam Param = new UnitParam() {
+        maxHp = 10,
         attackPoint = 0,
         defensePoint = 0,
         moveSpeed = 8,
@@ -23,6 +25,8 @@ public class Player : MonoBehaviour {
     void Awake () {
         _rigidbody = GetComponent<Rigidbody> ();
         _searchField = transform.Find ("SearchField").GetComponent<PlayerSearchField> ();
+
+        _nowHp = Param.maxHp;
     }
 
     void Start () { }
@@ -79,12 +83,42 @@ public class Player : MonoBehaviour {
     }
 
     void OnTriggerEnter (Collider other) {
-        if (other.tag.Equals ("EnemyBullet")) {
-            Param.hp -= other.gameObject.GetComponent<EnemyBullet>().attackPoint;
+        switch (other.tag)
+        {
+            case "EnemyBullet":
+                _nowHp -= other.gameObject.GetComponent<EnemyBullet>().attackPoint;
 
-            if (Param.hp <= 0) {
-                print ("GAME OVER");
-            }
+                if (_nowHp <= 0)
+                {
+                    print("GAME OVER");
+                }
+                break;
+
+            case "Item":
+                var item = other.gameObject.GetComponent<Item>();
+                UpdateParam(item);
+                Destroy(other.gameObject);
+                break;
         }
+    }
+
+    // アイテム取得によるステータス更新処理
+    void UpdateParam(Item item){
+        switch (item.powerUpType)
+        {
+            // ステータス上昇
+            case Item.PowerUpType.StatusUp:
+                Param.maxHp = item.itemParam.maxHp > 0 ? item.itemParam.maxHp : Param.maxHp;
+                Param.attackPoint = item.itemParam.attackPoint > 0 ? item.itemParam.attackPoint : Param.attackPoint;
+                Param.defensePoint = item.itemParam.defensePoint > 0 ? item.itemParam.defensePoint : Param.defensePoint;
+                Param.moveSpeed = item.itemParam.moveSpeed > 0 ? item.itemParam.moveSpeed : Param.moveSpeed;
+                Param.attackSpeed = item.itemParam.attackSpeed > 0 ? item.itemParam.attackSpeed : Param.attackSpeed;
+                break;
+
+            default:
+                Debug.LogAssertion("存在しないパワーアップをしているよ！ : " + item.powerUpType);
+                break;
+        }
+
     }
 }

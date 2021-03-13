@@ -2,16 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Item : MonoBehaviour
 {
-    public UnitParam param { get { return _param; } }
+    public enum PowerUpType
+    {
+        None,
+        Heal,
+        StatusUp,
+        SuperShot,
+        
+    }
+
+    public PowerUpType powerUpType { get { return _powerUpType; } }
+
+    public UnitParam itemParam { get { return _param; } }
 
     // Start is called before the first frame update
     void Start()
     {
-        SetEnemyUnitParam(ref _param);
-
-        _nowHp = _param.maxHp;
+        // 設定されているパラメータ設定
+        SetItemParam(ref _param);
     }
 
     // Update is called once per frame
@@ -20,20 +30,7 @@ public class Enemy : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag.Equals("PlayerBullet"))
-        {
-            _nowHp -= other.gameObject.GetComponent<PlayerBullet>().Param.attackPoint;
-
-            if (_nowHp <= 0)
-            {
-                print("GAME OVER");
-            }
-        }
-    }
-
-    private void SetEnemyUnitParam(ref UnitParam param)
+    private void SetItemParam(ref UnitParam param)
     {
         param.maxHp = _maxHp;
         param.attackPoint = _attackPoint;
@@ -41,6 +38,9 @@ public class Enemy : MonoBehaviour
         param.moveSpeed = _moveSpeed;
         param.attackSpeed = _attackSpeed;
     }
+
+    [SerializeField]
+    private PowerUpType _powerUpType = PowerUpType.None;
 
     [SerializeField]
     private int _maxHp = 0;
@@ -59,5 +59,4 @@ public class Enemy : MonoBehaviour
 
     private UnitParam _param = new UnitParam();
 
-    private int _nowHp = 0;
 }
