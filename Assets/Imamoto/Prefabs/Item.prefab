@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2868870312168843901}
   - component: {fileID: 9137855414692734558}
   - component: {fileID: 8423016347809330014}
-  - component: {fileID: 4189516425698942839}
+  - component: {fileID: 452442681112569247}
   m_Layer: 0
   m_Name: Item
   m_TagString: Item
@@ -113,7 +113,7 @@ MonoBehaviour:
   _defensePoint: 0
   _moveSpeed: 0
   _attackSpeed: 0
---- !u!54 &4189516425698942839
+--- !u!54 &452442681112569247
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
