@@ -9,11 +9,20 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour {
                 instance = (T) FindObjectOfType (typeof (T));
 
                 if (instance == null) {
-                    Debug.LogError (typeof (T) + "がない");
+                    Debug.LogError (typeof (T) + " not found.");
                 }
             }
 
             return instance;
         }
+    }
+
+    protected virtual void Awake () {
+        if (this != Instance) {
+            Destroy (this);
+            return;
+        }
+
+        DontDestroyOnLoad (this.gameObject);
     }
 }

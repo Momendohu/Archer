@@ -10,7 +10,9 @@ public class Player : MonoBehaviour {
 
     private PlayerSearchField _searchField = null;
 
-    private bool isSearing = false;
+    private bool _isSearching = false;
+
+    private bool _isMoving = false;
 
     private int _nowHp = 0;
 
@@ -40,6 +42,8 @@ public class Player : MonoBehaviour {
         bool up = Input.GetKey (KeyCode.UpArrow);
         bool down = Input.GetKey (KeyCode.DownArrow);
 
+        _isMoving = (left || right || up || down);
+
         _rigidbody.velocity = Vector3.zero;
         if (left) {
             _rigidbody.velocity += new Vector3 (-Param.moveSpeed, 0, 0);
@@ -57,8 +61,8 @@ public class Player : MonoBehaviour {
             _rigidbody.velocity += new Vector3 (0, 0, -Param.moveSpeed);
         }
 
-        if (_searchField.SearchedObject && !isSearing) {
-            isSearing = true;
+        if (_searchField.SearchedObject && !_isSearching) {
+            _isSearching = true;
             StartCoroutine (ShotBullet (_searchField.SearchedObject));
         }
     }
@@ -80,8 +84,13 @@ public class Player : MonoBehaviour {
 
     private IEnumerator ShotBullet (GameObject target) {
         while (true) {
+            if (_isMoving) {
+                yield return new WaitForSeconds (0.5f);
+                continue;
+            }
+
             if (!target) {
-                isSearing = false;
+                _isSearching = false;
                 break;
             }
             createBullet (target);
