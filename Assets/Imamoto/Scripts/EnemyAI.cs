@@ -11,9 +11,13 @@ public class EnemyAI : MonoBehaviour
         // プレイヤー自機取得
         _playerObj = GameObject.FindGameObjectWithTag("Player");
 
+        _targetTrs = _playerObj.transform;
+
         _agent = GetComponent<NavMeshAgent>();
 
-        _speed = 1f;
+        _speed = transform.GetComponent<Enemy>().param.moveSpeed;
+        Debug.Log(_speed);
+        _enemyShoot = GetComponent<EnemyShoot>();
 
         StartCoroutine("UpdateTarget", _waitTime);
 
@@ -23,6 +27,8 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         EnemyMove();
+
+        EnemyShootExecute();
     }
 
     // 敵のプレイヤーへの移動
@@ -33,7 +39,9 @@ public class EnemyAI : MonoBehaviour
 
         // プレイヤー位置にたどり着いたら、移動しない
         if (v.sqrMagnitude <= 0.1f)
+        {
             return;
+        }
 
         // 位置更新
         transform.position += transform.forward * _speed * Time.deltaTime;
@@ -48,9 +56,28 @@ public class EnemyAI : MonoBehaviour
                 yield break;
 
             transform.LookAt(_playerObj.transform);
-            _targetTrs = _playerObj.transform;
 
             yield return new WaitForSeconds(waitTime);
+        }
+    }
+
+    // 敵の攻撃処理
+    private void EnemyShootExecute()
+    {
+        // プレイヤーとの距離ベクトル
+        var v = transform.position - _targetTrs.position;
+
+        if (!_isAttackState && v.sqrMagnitude <= _attackStartPlayerDistence)
+        {
+            Debug.Log("攻撃開始");
+            StartCoroutine(_enemyShoot.Shoot());
+            _isAttackState = true;
+        }
+        else if(_isAttackState && v.sqrMagnitude > _attackStartPlayerDistence)
+        {
+            Debug.Log("攻撃終了");
+            StopCoroutine(_enemyShoot.Shoot());
+            _isAttackState = false;
         }
     }
 
@@ -64,4 +91,11 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField]
     private float _waitTime = 0f;
+
+    [SerializeField]
+    private float _attackStartPlayerDistence = 0f;
+
+    private bool _isAttackState;
+
+    private EnemyShoot _enemyShoot;
 }

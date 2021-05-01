@@ -495,6 +495,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4282052408853018082, guid: 49fa2445a2c3bad45b8cdba727081821,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4282052408853018089, guid: 49fa2445a2c3bad45b8cdba727081821,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -552,3 +557,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49fa2445a2c3bad45b8cdba727081821, type: 3}
+--- !u!1 &4282052410224277030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4282052408853018082, guid: 49fa2445a2c3bad45b8cdba727081821,
+    type: 3}
+  m_PrefabInstance: {fileID: 4282052410224277029}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4282052410224277031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4282052410224277030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcf683c0eded3245aee9c249be9a53a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHp: 0
+  _attackPoint: 0
+  _defensePoint: 0
+  _moveSpeed: 1
+  _attackSpeed: 0

@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public UnitParam param { get { return _param; } }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SetEnemyUnitParam(ref _param);
 
@@ -28,7 +28,8 @@ public class Enemy : MonoBehaviour
 
             if (_nowHp <= 0)
             {
-                print("GAME OVER");
+                Debug.Log("敵死亡");
+                Destroy(this.gameObject);
             }
         }
     }
