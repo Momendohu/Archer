@@ -9,13 +9,13 @@ public class EnemyBullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _attackPoint = transform.root.gameObject.GetComponent<Enemy>().param.attackPoint;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //transform.position = transform.position;
     }
 
     void OnTriggerStay(Collider other)
@@ -26,5 +26,20 @@ public class EnemyBullet : MonoBehaviour
         }
     }
 
+    public void StartShootBullet(Vector3 forwardVec, float bulletSpeed, int attackPoint)
+    {
+        _bulletForwardVec = forwardVec;
+
+        _bulletSpeed = bulletSpeed;
+
+        _attackPoint = attackPoint;
+
+        GetComponent<Rigidbody>().velocity = _bulletForwardVec * _bulletSpeed; //アタッチしているオブジェクトの前方にbullet speedの速さで発射
+    }
+
     private int _attackPoint;
+
+    private Vector3 _bulletForwardVec = Vector3.zero;
+
+    private float _bulletSpeed;
 }

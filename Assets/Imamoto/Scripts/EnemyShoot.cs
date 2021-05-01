@@ -7,7 +7,7 @@ public class EnemyShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine("Shoot");
+
     }
 
     // Update is called once per frame
@@ -16,14 +16,14 @@ public class EnemyShoot : MonoBehaviour
         
     }
 
-    private IEnumerator Shoot()
+    public IEnumerator Shoot()
     {
         while (true)
         {
             GameObject runcherBullet = GameObject.Instantiate(_bulletObj) as GameObject; //runcherbulletにbulletのインスタンスを格納
-            runcherBullet.transform.SetParent(this.transform);
-            runcherBullet.GetComponent<Rigidbody>().velocity = transform.forward * _bulletSpeed; //アタッチしているオブジェクトの前方にbullet speedの速さで発射
             runcherBullet.transform.position = transform.position;
+            runcherBullet.transform.SetParent(GameObject.Find("EnemyBullets").transform);
+            runcherBullet.GetComponent<EnemyBullet>().StartShootBullet( transform.forward, _bulletSpeed, transform.GetComponent<Enemy>().param.attackPoint);
 
             yield return new WaitForSeconds(_shootInterval);
         }
@@ -37,6 +37,4 @@ public class EnemyShoot : MonoBehaviour
 
     [SerializeField]
     private GameObject _bulletObj = null;
-
-    
 }
