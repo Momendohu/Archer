@@ -20,7 +20,7 @@ public class EnemyBullet : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag.Equals("Player"))
+        if (CheckTagDestroyBullet(other.tag))
         {
             Destroy(this.gameObject);
         }
@@ -35,6 +35,21 @@ public class EnemyBullet : MonoBehaviour
         _attackPoint = attackPoint;
 
         GetComponent<Rigidbody>().velocity = _bulletForwardVec * _bulletSpeed; //アタッチしているオブジェクトの前方にbullet speedの速さで発射
+    }
+
+    private bool CheckTagDestroyBullet(string tag)
+    {
+        switch (tag)
+        {
+            case "Enemy":
+            case "PlayerBullet":
+            case "PlayerObject":
+                return false;
+            default:
+                break;
+        }
+
+        return true;
     }
 
     private int _attackPoint;
