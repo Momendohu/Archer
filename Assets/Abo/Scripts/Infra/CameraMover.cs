@@ -4,9 +4,13 @@ using UnityEngine;
 //using UnityEngine.UI;
 
 public class CameraMover : MonoBehaviour {
+    [SerializeField]
     private float easingSpeed = 1f; //カメラ追従速度
 
+    [SerializeField]
     private Vector3 fix = new Vector3 (0, 10, 0); //位置補正
+
+    [SerializeField]
     private Vector3 rot = new Vector3 (75, 0, 0); //角度補正
 
     [SerializeField]
