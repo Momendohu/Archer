@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8731116372094589469}
   - component: {fileID: 8731116372094589468}
   - component: {fileID: 8731116372094589465}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SearchField
   m_TagString: PlayerObject
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 8731116373128248315}
   - component: {fileID: 8731116373128248310}
   - component: {fileID: 8731116373128248311}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
