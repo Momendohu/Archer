@@ -16,8 +16,6 @@ public class Player : MonoBehaviour {
 
     private int _nowHp = 0;
 
-    private List<RoomKeyType> roomKey = new List<RoomKeyType> ();
-
     public UnitParam Param = new UnitParam () {
         maxHp = 10,
         attackPoint = 0,
@@ -67,21 +65,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private bool UseRoomKey (RoomKeyType key) {
-        for (int i = 0; i < roomKey.Count; i++) {
-            if (roomKey[i] == key) {
-                roomKey.RemoveAt (i);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void GetRoomKey (RoomKeyType key) {
-        roomKey.Add (key);
-    }
-
     private IEnumerator ShotBullet (GameObject target) {
         while (true) {
             if (_isMoving) {
@@ -109,16 +92,7 @@ public class Player : MonoBehaviour {
     }
 
     void OnCollisionEnter (Collision collision) {
-        if (collision.gameObject.tag.Equals ("RoomKey")) {
-            GetRoomKey (collision.gameObject.GetComponent<RoomKey> ().Type);
-            Destroy (collision.gameObject.gameObject);
-        }
-
-        if (collision.gameObject.tag.Equals ("RoomDoor")) {
-            if (UseRoomKey (collision.gameObject.GetComponent<RoomDoor> ().Type)) {
-                collision.gameObject.SetActive (false);
-            }
-        }
+       
     }
 
     void OnTriggerEnter (Collider other) {
