@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
         SetEnemyUnitParam(ref _param);
 
         _nowHp = _param.maxHp;
+        _mainGameManager = MainGameManager.Instance;
     }
 
     // Update is called once per frame
@@ -28,8 +29,7 @@ public class Enemy : MonoBehaviour
 
             if (_nowHp <= 0)
             {
-                Debug.Log("敵死亡");
-                Destroy(this.gameObject);
+                DeadEnemy();
             }
         }
     }
@@ -41,6 +41,17 @@ public class Enemy : MonoBehaviour
         param.defensePoint = _defensePoint;
         param.moveSpeed = _moveSpeed;
         param.attackSpeed = _attackSpeed;
+    }
+
+    private void DeadEnemy()
+    {
+        Debug.Log("敵死亡");
+
+        if (_isBoss)
+        {
+            _mainGameManager.GameClear();
+        }
+        Destroy(this.gameObject);
     }
 
     [SerializeField]
@@ -58,7 +69,12 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _attackSpeed = 0f;
 
+    [SerializeField]
+    private bool _isBoss = false;
+
     private UnitParam _param = new UnitParam();
 
     private int _nowHp = 0;
+
+    private MainGameManager _mainGameManager;
 }
