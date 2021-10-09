@@ -16,8 +16,6 @@ public class Player : MonoBehaviour {
 
     private int _nowHp = 0;
 
-    private MainGameManager _mainGameManager;
-
     public UnitParam Param = new UnitParam () {
         maxHp = 10,
         attackPoint = 0,
@@ -34,8 +32,7 @@ public class Player : MonoBehaviour {
     }
 
     void Start () {
-        _mainGameManager = MainGameManager.Instance;
-        _mainGameManager.GameClear();
+
     }
 
     void Update () {
