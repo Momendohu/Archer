@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
         SetEnemyUnitParam(ref _param);
 
         _nowHp = _param.maxHp;
-        _mainGameManager = MainGameManager.Instance;
+        _mainGameManager = GodGameManager.Instance;
     }
 
     // Update is called once per frame
@@ -76,5 +76,5 @@ public class Enemy : MonoBehaviour
 
     private int _nowHp = 0;
 
-    private MainGameManager _mainGameManager;
+    private GodGameManager _mainGameManager;
 }
