@@ -2,30 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainGameManager : MonoBehaviour
+public class MainGameManager : SingletonMonoBehaviour<MainGameManager>
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        _state = GameState.Title;
+    }
+
     public enum GameState
     {
-        None = 0,
-        Title = 1,
-        MainGameStart = 2,
-        MainGameFisnih = 3,
+        Title = 0,
+        MainGame = 1,
+        MainGameClear = 2,
+        MainGameFailed = 3,
     }
 
     public void GameStart()
     {
-        _state = GameState.MainGameStart;
+        _state = GameState.MainGame;
     }
 
-    public void GameFisnih()
+    public void GameClear()
     {
-        _state = GameState.MainGameFisnih;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _state = GameState.Title;
+        _state = GameState.MainGameClear;
+        Debug.Log("GAME CLEAR !!!!!");
     }
 
     private GameState _state;
