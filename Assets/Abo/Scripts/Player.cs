@@ -16,6 +16,12 @@ public class Player : MonoBehaviour {
 
     private int _nowHp = 0;
 
+    private Vector3 _moveVelocity = Vector3.zero;
+
+    private float _totalFall = 0;
+
+    private bool _isJump = false;
+
     public UnitParam Param = new UnitParam () {
         maxHp = 10,
         attackPoint = 0,
@@ -45,26 +51,51 @@ public class Player : MonoBehaviour {
         _isMoving = (left || right || up || down);
 
         _rigidbody.velocity = Vector3.zero;
+        _moveVelocity = Vector3.zero;
+
+        _isJump = CheckGrounded();
+
         if (left) {
-            _rigidbody.velocity += new Vector3 (-Param.moveSpeed, 0, 0);
+            _moveVelocity += new Vector3 (-Param.moveSpeed, 0, 0);
         }
 
         if (right) {
-            _rigidbody.velocity += new Vector3 (Param.moveSpeed, 0, 0);
+            _moveVelocity += new Vector3 (Param.moveSpeed, 0, 0);
         }
 
         if (up) {
-            _rigidbody.velocity += new Vector3 (0, 0, Param.moveSpeed);
+            _moveVelocity += new Vector3 (0, 0, Param.moveSpeed);
         }
 
         if (down) {
-            _rigidbody.velocity += new Vector3 (0, 0, -Param.moveSpeed);
+            _moveVelocity += new Vector3 (0, 0, -Param.moveSpeed);
+        }
+
+        if (_isJump)
+        {
+            _totalFall += Time.deltaTime;
+            _moveVelocity.y = Physics.gravity.y * _totalFall;
+        }
+        else
+        {
+            _totalFall = 0;
+        }
+
+        if (!_isJump && Input.GetKeyDown(KeyCode.Space))
+        {
+            //_moveVelocity.y += 100f;
+            _rigidbody.AddForce(Vector3.up * 500, ForceMode.Impulse);
         }
 
         if (_searchField.SearchedObject && !_isSearching) {
             _isSearching = true;
             StartCoroutine (ShotBullet (_searchField.SearchedObject));
         }
+    }
+
+    private void FixedUpdate()
+    {
+        _rigidbody.velocity = _moveVelocity;
     }
 
     private IEnumerator ShotBullet (GameObject target) {
@@ -93,8 +124,11 @@ public class Player : MonoBehaviour {
         return obj;
     }
 
-    void OnCollisionEnter (Collision collision) {
-       
+    private bool CheckGrounded()
+    {
+        var ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
+        var distance = 0.6f;
+        return !Physics.Raycast(ray, distance);
     }
 
     void OnTriggerEnter (Collider other) {
