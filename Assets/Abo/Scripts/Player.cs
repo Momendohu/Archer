@@ -8,8 +8,6 @@ public class Player : MonoBehaviour {
 
     private Rigidbody _rigidbody = null;
 
-    private PlayerSearchField _searchField = null;
-
     private bool _isSearching = false;
 
     private bool _isMoving = false;
@@ -32,7 +30,6 @@ public class Player : MonoBehaviour {
 
     void Awake () {
         _rigidbody = GetComponent<Rigidbody> ();
-        _searchField = transform.Find ("SearchField").GetComponent<PlayerSearchField> ();
 
         _nowHp = Param.maxHp;
     }
@@ -85,11 +82,6 @@ public class Player : MonoBehaviour {
         {
             //_moveVelocity.y += 100f;
             _rigidbody.AddForce(Vector3.up * 500, ForceMode.Impulse);
-        }
-
-        if (_searchField.SearchedObject && !_isSearching) {
-            _isSearching = true;
-            StartCoroutine (ShotBullet (_searchField.SearchedObject));
         }
     }
 
